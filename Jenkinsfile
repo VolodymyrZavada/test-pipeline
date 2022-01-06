@@ -24,6 +24,11 @@ pipeline {
                   sh './mvnw clean install -DskipTests'
             }
         }
+        stage('Checkstyle') {
+            steps {
+                sh './mvnw checkstyle:checkstyle'
+            }
+        }
         stage('Build project') {
                     steps {
                           echo "Build project"
