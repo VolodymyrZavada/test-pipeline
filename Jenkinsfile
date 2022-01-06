@@ -46,10 +46,9 @@ pipeline {
                 // sh "kill \$(lsof -t -i :${APP_PORT})"
                 script {
                     sh '''#!/bin/bash
-                          set pids \$(lsof -ti tcp:$APP_PORT)
-                          echo "$pids"
-                          if [test $pids] then
-                            kill -9 $pids
+                          pids=$(lsof -ti tcp:${APP_PORT})
+                          if test "$pids"; then
+                            kill -9 "$pids"
                           else
                             echo "No process on port to kill"
                           fi
