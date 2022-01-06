@@ -20,7 +20,8 @@ pipeline {
         }
         stage('Compile') {
             steps {
-                  echo "Compile project"
+                  // echo "Compile project"
+                  sh './mvnw clean install -DskipTests'
             }
         }
         stage('Build project') {
@@ -33,5 +34,11 @@ pipeline {
                           echo "Deploy project"
                     }
                 }
+    }
+
+    post {
+        always {
+            deleteDir()
+        }
     }
 }
