@@ -38,8 +38,7 @@ pipeline {
         stage('Kill process on port') {
             steps {
                 // sh 'pid=\$(lsof -i:9008 -t); kill -TERM \$pid || kill -KILL \$pid'
-                sh "pid=\$(lsof -i:8989 -t); kill -TERM \$pid "
-                                      + "|| kill -KILL \$pid"
+                sh "pid=\$(lsof -i:8989 -t); kill -TERM \$pid || kill -KILL \$pid"
             }
         }
         stage('Deploy') {
