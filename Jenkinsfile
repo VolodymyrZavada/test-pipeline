@@ -14,7 +14,7 @@ pipeline {
                   echo "Compile project"
             }
         }
-        stage('Build') {
+        stage('Build project') {
                     steps {
                           echo "Build project"
                     }
