@@ -30,15 +30,22 @@ pipeline {
             }
         }
         stage('Build project') {
-                    steps {
-                          echo "Build project"
-                    }
-                }
-         stage('Deploy') {
-                    steps {
-                          echo "Deploy project"
-                    }
-                }
+            steps {
+                // echo "Build project"
+                sh './mvnw package'
+            }
+        }
+
+        stage('Kill process on port') {
+            sh 'pid=\$(lsof -i:9008 -t); kill -TERM \$pid || kill -KILL \$pid'
+        }
+
+        stage('Deploy') {
+            steps {
+                // echo "Deploy project"
+                sh 'nohup ./mvnw spring-boot:run &'
+            }
+        }
     }
 
     post {
