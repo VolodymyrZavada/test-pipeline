@@ -44,7 +44,8 @@ pipeline {
             steps {
                 // echo "Deploy project"
                 // sh 'nohup ./mvnw spring-boot:run &'
-                sh 'BUILD_ID=dontKillMe nohup java -jar target/test-pipeline.jar >> /opt/DEPLOYMENT/logs/test-pipeline.log &'
+                // BUILD_ID=dontKillMe
+                sh 'nohup java -jar target/test-pipeline.jar >> /opt/DEPLOYMENT/logs/test-pipeline.log &'
             }
         }
     }
