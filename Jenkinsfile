@@ -12,7 +12,7 @@ pipeline {
                     branches: [[name: 'master']],
                     userRemoteConfigs: [[
                         // https://github.com/VolodymyrZavada/test-pipeline.git
-                        url: 'git@github.com:VolodymyrZavada/test-pipeline.git',
+                        url: 'https://github.com/VolodymyrZavada/test-pipeline.git',
                         credentialsId: ''
                     ]]
                ])
