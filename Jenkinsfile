@@ -6,7 +6,16 @@ pipeline {
     stages {
         stage('Pull From Github') {
             steps {
-                echo "Pull project"
+                // echo "Pull project"
+               checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: 'master']],
+                    userRemoteConfigs: [[
+                        // https://github.com/VolodymyrZavada/test-pipeline.git
+                        url: git@github.com:VolodymyrZavada/test-pipeline.git,
+                        credentialsId: ''
+                    ]]
+               ])
             }
         }
         stage('Compile') {
