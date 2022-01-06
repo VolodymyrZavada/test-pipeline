@@ -47,6 +47,7 @@ pipeline {
                 script {
                     sh '''#!/bin/bash
                           set pids \$(lsof -ti tcp:$APP_PORT)
+                          echo "$pids"
                           if [test $pids] then
                             kill -9 $pids
                           else
