@@ -44,6 +44,7 @@ pipeline {
                 // sh "pid=\$(lsof -i:9008 -t); kill -TERM \$pid || kill -KILL \$pid"
                 echo "Stop process on port"
                 sh "kill \$(lsof -t -i :${APP_PORT})"
+                sleep(time:3,unit:"SECONDS")
             }
         }
         stage('Deploy') {
@@ -53,6 +54,7 @@ pipeline {
                 // BUILD_ID=dontKillMe
                 //  >> /opt/DEPLOYMENT/logs/test-pipeline.log
                 //  sh 'nohup java -jar target/test-pipeline.jar &'
+
                 withEnv(['JENKINS_NODE_COOKIE=dontkill']) {
                     sh 'nohup ./mvnw spring-boot:run -Dserver.port=${APP_PORT} &'
                 }
