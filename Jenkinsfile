@@ -42,8 +42,8 @@ pipeline {
         stage('Kill process on port') {
             steps {
                 // sh "pid=\$(lsof -i:9008 -t); kill -TERM \$pid || kill -KILL \$pid"
-                echo "Stop process on port"
-                sh "kill \$(lsof -t -i :${APP_PORT})"
+                echo "Stop process on port: " + sh "lsof -t -i :${APP_PORT}"
+                // sh "kill \$(lsof -t -i :${APP_PORT})"
                 sleep(time:3,unit:"SECONDS")
             }
         }
