@@ -54,12 +54,12 @@ pipeline {
             }
         }
     }
-
-/*     post {
+    post {
         always {
-            deleteDir()
+            // deleteDir()
+            cleanWs()
         }
-    } */
+    }
 
     /*
     sh "pid=\$(lsof -i:8989 -t); kill -TERM \$pid "
