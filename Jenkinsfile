@@ -3,6 +3,10 @@ properties([pipelineTriggers([githubPush()])])
 pipeline {
     agent any
 
+    environment {
+        APP_PORT= 9008
+    }
+
     stages {
         stage('Pull From Github') {
             steps {
@@ -38,7 +42,8 @@ pipeline {
         stage('Kill process on port') {
             steps {
                 // sh "pid=\$(lsof -i:9008 -t); kill -TERM \$pid || kill -KILL \$pid"
-                echo 'Empty for now'
+                echo "Stop process on port"
+                sh "kill \$(lsof -t -i :${APP_PORT})"
             }
         }
         stage('Deploy') {
@@ -49,7 +54,7 @@ pipeline {
                 //  >> /opt/DEPLOYMENT/logs/test-pipeline.log
                 //  sh 'nohup java -jar target/test-pipeline.jar &'
                 withEnv(['JENKINS_NODE_COOKIE=dontkill']) {
-                    sh 'nohup ./mvnw spring-boot:run -Dserver.port=9008 &'
+                    sh 'nohup ./mvnw spring-boot:run -Dserver.port=${APP_PORT} &'
                 }
             }
         }
