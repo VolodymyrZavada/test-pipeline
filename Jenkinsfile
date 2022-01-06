@@ -10,12 +10,10 @@ pipeline {
     stages {
         stage('Pull From Github') {
             steps {
-                // echo "Pull project"
                checkout([
                     $class: 'GitSCM',
                     branches: [[name: 'master']],
                     userRemoteConfigs: [[
-                        // https://github.com/VolodymyrZavada/test-pipeline.git
                         url: 'https://github.com/VolodymyrZavada/test-pipeline.git',
                         credentialsId: ''
                     ]]
@@ -24,7 +22,6 @@ pipeline {
         }
         stage('Compile') {
             steps {
-                  // echo "Compile project"
                   sh './mvnw clean install -DskipTests'
             }
         }
@@ -35,15 +32,11 @@ pipeline {
         }
         stage('Build project') {
             steps {
-                // echo "Build project"
                 sh './mvnw package'
             }
         }
         stage('Kill process on port') {
             steps {
-                // sh "pid=\$(lsof -i:9008 -t); kill -TERM \$pid || kill -KILL \$pid"
-                // echo "Stop process on port ${APP_PORT}"
-                // sh "kill \$(lsof -t -i :${APP_PORT})"
                 script {
                     sh '''#!/bin/bash
                           pids=$(lsof -ti tcp:${APP_PORT})
@@ -66,9 +59,15 @@ pipeline {
     }
     post {
         always {
-            // deleteDir()
-            // cleanWs()
             echo "Post called"
+
+            /*
+                === DELETE PREVIOUS BUILDS ===
+                def jobName = "test-pipeline"
+                def job = Jenkins.instance.getItem(jobName)
+                job.getBuilds().each { if(it.number >= 1 && it.number <= 33) it.delete() }
+                job.save()
+            */
         }
     }
 }
