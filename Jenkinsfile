@@ -43,7 +43,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 // echo "Deploy project"
-                sh 'nohup ./mvnw spring-boot:run &'
+                // sh 'nohup ./mvnw spring-boot:run &'
+                sh 'BUILD_ID=dontKillMe nohup java -jar target/test-pipeline.jar >> /opt/DEPLOYMENT/logs/test-pipeline.log &'
             }
         }
     }
