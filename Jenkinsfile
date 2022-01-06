@@ -35,11 +35,9 @@ pipeline {
                 sh './mvnw package'
             }
         }
-
         stage('Kill process on port') {
             sh 'pid=\$(lsof -i:9008 -t); kill -TERM \$pid || kill -KILL \$pid'
         }
-
         stage('Deploy') {
             steps {
                 // echo "Deploy project"
