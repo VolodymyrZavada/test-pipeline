@@ -42,9 +42,16 @@ pipeline {
         stage('Kill process on port') {
             steps {
                 // sh "pid=\$(lsof -i:9008 -t); kill -TERM \$pid || kill -KILL \$pid"
-                echo "Stop process on port: " + sh "lsof -t -i :${APP_PORT}"
+                // echo "Stop process on port ${APP_PORT}"
                 // sh "kill \$(lsof -t -i :${APP_PORT})"
-                sleep(time:3,unit:"SECONDS")
+                sh '''#!/bin/bash
+                    set pids (lsof -ti tcp:${APP_PORT})
+                    if test $pids
+                        kill -9 $pids
+                    else
+                        echo "No process on  port to kill"
+                    end
+                '''
             }
         }
         stage('Deploy') {
